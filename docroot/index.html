@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,19 +19,21 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+    <!--[if lt IE 9]>"col-md-1"
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
   </head>
 
-  <body>
+  <body ng-controller="MainCtrl">
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -57,12 +59,13 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
+        <h1>{{name}} tornado RabbitMQ Bootstrap</h1>
         <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
       </div>
 
       <h3>Chat!</h3>
-      <div id="protocols" style="float: right">
+      <div class="row">
+      <div id="protocols" class="col-md-4">
         <ul>
           <li>
             <input id="websocket" type="checkbox" value="websocket" checked="checked"></input>
@@ -95,15 +98,18 @@
         </ul>
       </div>
 
-      <div>
-        <a id="connect" href="#">Connect</a>&nbsp;|&nbsp;Status: <span id="status">disconnected</span>
+      <div class="col-md-8">
+        <div>
+          <a id="connect" href="#">Connect</a>&nbsp;|&nbsp;Status: <span id="status">disconnected</span>
+        </div>
+        <div id="log" style="width: 40em; height: 20em; overflow:auto; border: 1px solid black">
+        </div>
+        <form id="chatform">
+          <input id="text" type="text" />
+          <input type="submit" />
+        </form>
       </div>
-      <div id="log" style="width: 60em; height: 20em; overflow:auto; border: 1px solid black">
-      </div>
-      <form id="chatform">
-        <input id="text" type="text" />
-        <input type="submit" />
-      </form>
+    </div>
 
     </div><!-- /.container -->
 
@@ -115,87 +121,7 @@
     <script src="lib/bootstrap-dist/js/bootstrap.min.js"></script>
 
     <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
-    <script>
-      $(function() {
-        var conn = null;
-
-        function log(msg) {
-          var control = $('#log');
-          control.html(control.html() + msg + '<br/>');
-          control.scrollTop(control.scrollTop() + 1000);
-        }
-
-        function connect() {
-          disconnect();
-
-          var transports = $('#protocols input:checked').map(function(){
-              return $(this).attr('id');
-          }).get();
-
-          conn = new SockJS('http://' + window.location.host + '/chat', transports);
-
-          log('Connecting...');
-
-          conn.onopen = function() {
-            log('Connected.');
-            update_ui();
-          };
-
-          conn.onmessage = function(e) {
-            console.log(e.data);
-            log('Received: ' + e.data);
-          };
-
-          conn.onclose = function() {
-            log('Disconnected.');
-            conn = null;
-            update_ui();
-          };
-        }
-
-        function disconnect() {
-          if (conn != null) {
-            log('Disconnecting...');
-
-            conn.close();
-            conn = null;
-
-            update_ui();
-          }
-        }
-
-        function update_ui() {
-          var msg = '';
-
-          if (conn == null || conn.readyState != SockJS.OPEN) {
-            $('#status').text('disconnected');
-            $('#connect').text('Connect');
-          } else {
-            $('#status').text('connected (' + conn.protocol + ')');
-            $('#connect').text('Disconnect');
-          }
-        }
-
-        $('#connect').click(function() {
-          if (conn == null) {
-            connect();
-          } else {
-            disconnect();
-          }
-
-          update_ui();
-          return false;
-        });
-
-        $('form').submit(function() {
-          var text = $('#text').val();
-          log('Sending: ' + text);
-          conn.send(text);
-          $('#text').val('').focus();
-          return false;
-        });
-      });
-    </script>
+    <script type="text/javascript" src="js/websocket.js"></script>
 
   </body>
 </html>

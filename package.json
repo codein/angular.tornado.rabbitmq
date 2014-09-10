@@ -1,0 +1,24 @@
+{
+  "name": "angular.tornado.rabbitmq",
+  "version": "0.0.1",
+  "description": "web app starter kit",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codein/angular.tornado.rabbitmq.git"
+  },
+  "author": "Robin Varghese",
+  "license": "CCC",
+  "bugs": {
+    "url": "https://github.com/codein/angular.tornado.rabbitmq/issues"
+  },
+  "homepage": "https://github.com/codein/angular.tornado.rabbitmq",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.11.1",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
