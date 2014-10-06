@@ -28,6 +28,7 @@ if __name__ == "__main__":
     )
 
     # 3. Make Tornado app listen on port 8080
+    print "server running on port 8080"
     app.listen(8080)
 
     # 4. Start IOLoop
