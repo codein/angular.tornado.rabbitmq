@@ -11,3 +11,5 @@ Tornado server to server static assets, handles the `/chat` enpoint to server pu
 
 #### Push notifications
 The back-end sub-system can push messages to front end over websocket via rabbitmq messaging queues.
+
+[https://raw.githubusercontent.com/codein/angular.tornado.rabbitmq/master/terminal.gif]
